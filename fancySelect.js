@@ -26,6 +26,19 @@
       if (sel.hasClass('fancified') || sel[0].tagName !== 'SELECT') {
         return;
       }
+
+      /*
+       * @author TYPOWORX <info@typoworx.de>
+       * Add close on body-click
+      */
+      $('body').on('click', function(e) {
+        if($('.fancy-select > .trigger').is('.open')) {
+          if(!$(e.target).is('.trigger') && $(e.target).closest('.fancy-select > .trigger').length == 0) {
+            trigger.trigger('close.fs');
+          }
+        }
+      });
+
       sel.addClass('fancified');
       sel.css({
         width: 1,
@@ -86,9 +99,14 @@
               }
             }
             options.toggleClass('open');
-            if (!isiOS) {
-              return sel.focus();
-            }
+
+            /*
+             * @author TYPOWORX <info@typoworx.de>
+             * Bugfix, don't use will close on scroll!
+            */
+            //if (!isiOS) {
+            //  return sel.focus();
+            //}
           }
         }
       });
